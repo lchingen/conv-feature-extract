@@ -48,3 +48,4 @@ training, inference testing and weights extraction functions.
     - utils.py: utility functions
     - test-img.py: test single image inference on trained network
     - test-webcam.py: test webcam streaming and DNN inference results
+    - extract-weight.py: extract conv weights based on restored DNN model
