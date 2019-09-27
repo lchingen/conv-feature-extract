@@ -130,7 +130,7 @@ def model_fn(features, mode):
     total_loss = tf.reduce_mean(tf.reduce_sum(tf.squared_difference(x, y)))
 
     # Outputs
-    predictions = {'x': x, 'y': y, 'code': code}
+    predictions = {'x': x, 'y': y, 'code': code} # code is conv_0 output
 
     # Mode selection
     if mode == tf.estimator.ModeKeys.PREDICT:

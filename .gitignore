@@ -1,3 +1,4 @@
 auto-encoder/db/*
 auto-encoder/logs/*
 auto-encoder/__pycache__
+*.pkl

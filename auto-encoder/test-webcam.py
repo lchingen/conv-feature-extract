@@ -11,6 +11,7 @@ from utils import Utils
 
 tf.enable_eager_execution()
 
+
 def main(unused_argv):
     # Export model_fn to only use decoder
     export_tf_model(FLAGS.export_path)

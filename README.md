@@ -1,9 +1,15 @@
-# Convolutional Feature Extractor
+# Convolutional Feature Extractor (Autoencoder Model)
 
 <p align='justify'>
 This repository is intended to serve as a reference to a front-end convolutional
 auto-encoder implementation. Specifically, it contains the complete pipeline for
 training, inference testing and weights extraction functions.
+</p>
+
+<p align='justify'>
+This repository also includes extraction functions that can be used to pickle
+the trained weights, biases, input and output activations for validation
+purposes.
 </p>
 
 
@@ -23,6 +29,11 @@ training, inference testing and weights extraction functions.
 # Train feature extractor
 >> mkdir logs
 >> python3 auto-encoder/train.py
+
+# Extract and dump trained weight, bias, ia, oa
+>> mkdir dump
+>> python3 auto-encoder/extract-weight.py
+>> python3 auto-encoder/extract-input.py
 
 ```
 
@@ -48,4 +59,5 @@ training, inference testing and weights extraction functions.
     - utils.py: utility functions
     - test-img.py: test single image inference on trained network
     - test-webcam.py: test webcam streaming and DNN inference results
-    - extract-weight.py: extract conv weights based on restored DNN model
+    - extract-weight.py: extract W and B based on restored DNN model
+    - extract-input.py: extract normalized IA and W after inference

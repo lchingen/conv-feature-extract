@@ -98,3 +98,17 @@ class Utils:
                                       buffer_size=FLAGS.buffer_size,
                                       batch_size=FLAGS.batch_size,
                                       num_epochs=FLAGS.num_epochs)
+
+    @staticmethod
+    def pack(data, name):
+        f = open(name, 'wb')
+        pickle.dump(data, f)
+        f.close()
+
+
+    @staticmethod
+    def unpack(name):
+        f = open(name, 'rb')
+        data = pickle.load(f)
+        f.close()
+        return data

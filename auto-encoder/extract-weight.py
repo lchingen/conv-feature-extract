@@ -1,6 +1,7 @@
 import numpy as np
 import tensorflow as tf
 from pathlib import Path
+from utils import Utils
 
 
 if __name__ == '__main__':
@@ -21,5 +22,11 @@ if __name__ == '__main__':
             print('-----------------------------------------------------------')
             print("name: {}, value: {}".format(name, val))
 
-        # get first layer conv weights
-        first_conv_layer_weights = weight_vals[0]
+
+    # get first layer conv weights
+    first_conv_layer_weight = weight_vals[0]
+    first_conv_layer_bias = weight_vals[1]
+
+    # pickle data
+    Utils.pack(first_conv_layer_weight, './dump/weight_0.pkl')
+    Utils.pack(first_conv_layer_bias, './dump/bias_0.pkl')
