@@ -93,8 +93,22 @@ class Utils:
 
 
     @staticmethod
+    def create_dataset(path, buffer_size, batch_size, num_epochs):
+        # NOTE: change the extract_feature reshape size for different datasets
+        with tf.device('cpu:0'):
+            dataset = tf.data.TFRecordDataset(path)\
+                      .shuffle(buffer_size)\
+                      .repeat(num_epochs)\
+                      .map(extract_features, num_parallel_calls=4)\
+                      .map(augment_features, num_parallel_calls=4)\
+                      .batch(batch_size)\
+                      .prefetch(1)
+            return dataset
+
+
+    @staticmethod
     def train_input_fn_from_tfr():
-        return lambda: create_dataset(path=FLAGS.train_path,
+        return lambda: Utils.create_dataset(path=FLAGS.train_path,
                                       buffer_size=FLAGS.buffer_size,
                                       batch_size=FLAGS.batch_size,
                                       num_epochs=FLAGS.num_epochs)
