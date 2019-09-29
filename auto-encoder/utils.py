@@ -93,14 +93,33 @@ class Utils:
 
 
     @staticmethod
+    def extract_features(example):
+        feature = {'img': tf.FixedLenFeature([], tf.string)}
+        parsed_example = tf.parse_single_example(example, feature)
+        imgs = tf.decode_raw(parsed_example['img'], tf.float32)
+        imgs = tf.reshape(imgs, (FLAGS.in_h, FLAGS.in_w, FLAGS.in_c))
+        imgs /= 255.0
+        return imgs
+
+
+    @staticmethod
+    def augment_features(img):
+        img = tf.image.random_flip_left_right(img)
+        img = tf.image.random_brightness(img, max_delta=32.0/255.0)
+        img = tf.image.random_saturation(img, lower=0.5, upper=1.5)
+        img = tf.clip_by_value(img, 0.0, 1.0)
+        return img
+
+
+    @staticmethod
     def create_dataset(path, buffer_size, batch_size, num_epochs):
         # NOTE: change the extract_feature reshape size for different datasets
         with tf.device('cpu:0'):
             dataset = tf.data.TFRecordDataset(path)\
                       .shuffle(buffer_size)\
                       .repeat(num_epochs)\
-                      .map(extract_features, num_parallel_calls=4)\
-                      .map(augment_features, num_parallel_calls=4)\
+                      .map(Utils.extract_features, num_parallel_calls=4)\
+                      .map(Utils.augment_features, num_parallel_calls=4)\
                       .batch(batch_size)\
                       .prefetch(1)
             return dataset
